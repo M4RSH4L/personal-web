@@ -3,6 +3,8 @@ import { getCanonicalUrl } from '../lib/seo-config';
 import { SERVICES_DATA } from '../data/services';
 import { ARTICLES_DATA } from '../data/articles';
 
+export const dynamic = 'force-static';
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
