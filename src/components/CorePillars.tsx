@@ -1,154 +1,149 @@
-import React, { useState } from 'react';
-import { Target, Megaphone, BarChart3, Users, ChevronRight, CheckCircle2 } from 'lucide-react';
+'use client';
 
-interface PillarData {
-  id: string;
-  number: string;
-  title: string;
-  summary: string;
-  details: string;
-  deliverables: string[];
-  icon: React.ReactNode;
-}
+import React from 'react';
+import Link from 'next/link';
+import {
+  BarChart3,
+  ShoppingBag,
+  SearchCheck,
+  Target,
+  MessageSquareQuote,
+  ArrowUpRight,
+  CheckCircle2,
+} from 'lucide-react';
+import { SERVICES_DATA } from '../data/services';
 
-const PILLARS: PillarData[] = [
-  {
-    id: 'meta_ads',
-    number: '01',
-    title: 'Meta Ads de Alto Rendimiento',
-    summary: 'Campañas de adquisición a escala con creativos que detienen el scroll.',
-    details: 'Estructuras de cuentas consolidadas (Advantage+ / CBO) con testing ágil de hooks, ángulos de dolor y variaciones de video. Optimizamos cada peso invertido para maximizar retorno y volumen.',
-    deliverables: [
-      'Campañas de escala masiva en Meta, Google y TikTok',
-      'Factoría continua de creativos UGC y copys de respuesta directa',
-      'Estrategias de adquisición de leads y ventas con ROAS predecible'
-    ],
-    icon: <Megaphone className="w-6 h-6 text-[#101828]" />
-  },
-  {
-    id: 'business_intelligence',
-    number: '02',
-    title: 'Business Intelligence & Atribución',
-    summary: 'Datos limpios, tracking forense y toma de decisiones con números reales.',
-    details: 'Basta de suposiciones y métricas de vanidad. Diseñamos dashboards ejecutivos en tiempo real y tracking server-side (CAPI + GTM) para saber con exactitud matemática el margen neto de cada acción.',
-    deliverables: [
-      'Dashboards en tiempo real de CAC, LTV y contribución neta',
-      'Implementación de Meta CAPI y Google Tag Manager server-side',
-      'Modelos de atribución multicanal para no perder compras de iOS'
-    ],
-    icon: <BarChart3 className="w-6 h-6 text-[#101828]" />
-  },
-  {
-    id: 'organico',
-    number: '03',
-    title: 'Campañas Orgánicas & Comunidad',
-    summary: 'Estrategia de contenido que amplifica el alcance y reduce el costo de adquisición.',
-    details: 'El contenido orgánico no es decoración: es la palanca que alimenta al algoritmo publicitario, genera confianza inmediata en la audiencia y crea una comunidad que recompra sin pagar pauta.',
-    deliverables: [
-      'Estrategia de contenido viral y educativo para TikTok, Reels y Shorts',
-      'Sinergia orgánico-pago para testear ganchos a costo cero',
-      'Construcción de comunidad y retención de marca a largo plazo'
-    ],
-    icon: <Target className="w-6 h-6 text-[#101828]" />
-  },
-  {
-    id: 'decisiones_crecimiento',
-    number: '04',
-    title: 'Decisiones de Crecimiento Senior',
-    summary: 'Acompañamiento humano con mentalidad de socios comerciales.',
-    details: 'Sin intermediarios desconectados ni ejecutivos de cuenta junior. Hablás directamente con estrategas senior que conocen la economía de tu negocio y toman decisiones operativas todos los días.',
-    deliverables: [
-      'Canal directo de comunicación ágil por Slack / WhatsApp',
-      'Sincronización quincenal de decisiones estratégicas y financieras',
-      'Cero ataduras contractuales tóxicas; nos elegís por resultados'
-    ],
-    icon: <Users className="w-6 h-6 text-[#101828]" />
-  }
-];
+const SERVICE_ICONS: Record<string, React.ReactNode> = {
+  'inteligencia-de-negocios-retail': <BarChart3 className="w-6 h-6 text-[#101828]" />,
+  'vender-en-mercado-libre': <ShoppingBag className="w-6 h-6 text-[#101828]" />,
+  'diagnostico-comercial-benchmark': <SearchCheck className="w-6 h-6 text-[#101828]" />,
+  'adquisicion-y-ventas-b2c': <Target className="w-6 h-6 text-[#101828]" />,
+  'objeciones-y-contratacion-comercial': <MessageSquareQuote className="w-6 h-6 text-[#101828]" />,
+};
 
 export const CorePillars: React.FC = () => {
-  const [activePillar, setActivePillar] = useState<string | null>(null);
-
   return (
     <section id="servicios" className="py-20 md:py-28 bg-white border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
-        
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div className="max-w-xl">
+          <div className="max-w-2xl">
             <span className="text-xs font-bold text-[#155EEF] uppercase tracking-wider block mb-2">
-              PROPUESTA DE VALOR INTEGRAL
+              ARQUITECTURA DE SERVICIOS ESPECIALIZADOS
             </span>
             <h2 className="text-3xl md:text-5xl font-extrabold text-[#101828] tracking-tight">
-              Cuatro pilares para un crecimiento predecible.
+              Cinco áreas de intervención para destrabar rentabilidad y ventas.
             </h2>
           </div>
-          <p className="text-slate-600 max-w-md text-sm md:text-base leading-relaxed">
-            Unimos <strong>Meta Ads, Business Intelligence, campañas orgánicas</strong> y decisiones financieras con números reales para marcas de servicios, educación, B2B y e-commerce.
-          </p>
+          <div className="max-w-md space-y-2">
+            <p className="text-slate-600 text-sm md:text-base leading-relaxed">
+              Cada servicio responde a un cuello de botella concreto en empresas de{' '}
+              <strong>retail, e-commerce, Mercado Libre y ventas B2C</strong>.
+            </p>
+            <Link
+              href="/servicios"
+              className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#155EEF] hover:underline uppercase tracking-wider"
+            >
+              <span>Ver comparativa completa de servicios</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
         </div>
 
-        {/* 4 Pillars Grid (matching reference image visual icons and typography) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {PILLARS.map((pillar) => {
-            const isSelected = activePillar === pillar.id;
-
+        {/* 5 Specialized Services Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+          {SERVICES_DATA.map((service, index) => {
+            const isFeatured = index === 0 || index === 3;
             return (
-              <div
-                key={pillar.id}
-                onClick={() => setActivePillar(isSelected ? null : pillar.id)}
-                className={`group relative p-7 rounded-2xl border transition-all duration-200 cursor-pointer ${
-                  isSelected 
-                    ? 'border-[#155EEF] bg-blue-50/30 shadow-md ring-2 ring-[#155EEF]/20' 
-                    : 'border-slate-200 hover:border-slate-300 bg-white hover:shadow-sm'
+              <article
+                key={service.slug}
+                className={`group relative p-7 rounded-2xl border transition-all duration-200 flex flex-col justify-between ${
+                  isFeatured
+                    ? 'border-slate-300 bg-slate-50/50 hover:border-[#155EEF] hover:bg-white hover:shadow-lg'
+                    : 'border-slate-200 bg-white hover:border-[#155EEF] hover:shadow-lg'
                 }`}
               >
-                {/* Yellow Lime Icon Container (matching reference image) */}
-                <div className="w-14 h-14 rounded-full bg-[#D7FF00] flex items-center justify-center mb-6 shadow-sm group-hover:scale-105 transition-transform">
-                  {pillar.icon}
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    {/* Yellow Lime Icon Container (preserving original identity) */}
+                    <div className="w-14 h-14 rounded-full bg-[#D7FF00] flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                      {SERVICE_ICONS[service.slug]}
+                    </div>
+                    <span className="text-xs font-mono font-bold text-slate-400 px-2.5 py-1 rounded-full bg-slate-100">
+                      SERVICIO {service.number}
+                    </span>
+                  </div>
+
+                  <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#155EEF] block mb-1.5">
+                    {service.badge}
+                  </span>
+
+                  <h3 className="text-xl font-extrabold text-[#101828] mb-3 group-hover:text-[#155EEF] transition-colors leading-snug">
+                    <Link href={`/servicios/${service.slug}`} className="focus:outline-none">
+                      {service.shortTitle}
+                    </Link>
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-5">
+                    {service.heroSubtitle}
+                  </p>
+
+                  {/* Key Deliverables Preview */}
+                  <ul className="space-y-2 mb-6 pt-4 border-t border-slate-100">
+                    {service.deliverables.slice(0, 3).map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-xs text-slate-700 font-medium">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#155EEF] shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
 
-                {/* Editorial Number */}
-                <span className="text-xs font-mono font-bold text-slate-400 block mb-1">
-                  {pillar.number}
-                </span>
-
-                {/* Title */}
-                <h3 className="text-xl font-bold text-[#101828] mb-2 group-hover:text-[#155EEF] transition-colors">
-                  {pillar.title}
-                </h3>
-
-                {/* Summary */}
-                <p className="text-sm text-slate-600 font-medium leading-relaxed mb-4">
-                  {pillar.summary}
-                </p>
-
-                {/* Expanded Details on Click */}
-                {isSelected ? (
-                  <div className="pt-4 mt-4 border-t border-blue-100 text-xs text-slate-700 animate-in fade-in duration-200">
-                    <p className="mb-3 leading-relaxed text-slate-800 font-normal">
-                      {pillar.details}
-                    </p>
-                    <ul className="space-y-2">
-                      {pillar.deliverables.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-slate-700 font-medium">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-[#155EEF] shrink-0 mt-0.5" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-1 text-xs font-bold text-[#155EEF] group-hover:underline">
-                    <span>Ver qué incluye</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </div>
-                )}
-              </div>
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                  <Link
+                    href={`/servicios/${service.slug}`}
+                    className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#101828] group-hover:text-[#155EEF] transition-colors uppercase tracking-wider"
+                  >
+                    <span>Explorar servicio y alcance</span>
+                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </Link>
+                </div>
+              </article>
             );
           })}
-        </div>
 
+          {/* 6th Card: Custom Diagnostic / Author Credibility Anchor */}
+          <div className="p-7 rounded-2xl bg-[#101828] text-white flex flex-col justify-between border border-slate-800 shadow-xl">
+            <div>
+              <span className="inline-block text-[11px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-[#D7FF00] text-[#101828] mb-5">
+                ¿NO SABÉS POR DÓNDE EMPEZAR?
+              </span>
+              <h3 className="text-xl sm:text-2xl font-extrabold text-white mb-3 leading-snug">
+                Identificamos juntos el cuello de botella principal de tu negocio.
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
+                En lugar de venderte un paquete enlatado, analizamos si tu urgencia hoy está en ordenar tus números de
+                retail, rentabilizar Mercado Libre, auditar tu competencia o entrenar el cierre de ventas B2C.
+              </p>
+            </div>
+
+            <div className="space-y-3 pt-4 border-t border-white/10">
+              <Link
+                href="/servicios/diagnostico-comercial-benchmark"
+                className="w-full py-3.5 px-4 text-xs font-extrabold text-[#101828] bg-[#D7FF00] hover:bg-[#cbf400] rounded-xl transition-all flex items-center justify-center gap-2"
+              >
+                <span>VER DIAGNÓSTICO COMERCIAL</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/sobre-mi"
+                className="block text-center text-xs font-semibold text-slate-300 hover:text-white transition-colors"
+              >
+                Conocer la trayectoria de Ronan Lavorato →
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

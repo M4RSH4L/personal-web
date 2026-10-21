@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Sparkles, ArrowRight, RefreshCw, CheckCircle2, AlertTriangle, Send } from 'lucide-react';
 import { BusinessModel, GrowthChallenge, DiagnosticResult } from '../types';

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Search, Compass, Rocket, Repeat, CheckCircle } from 'lucide-react';
 
