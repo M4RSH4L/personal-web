@@ -1,6 +1,0 @@
-{
-  "name": "MORPHO — Agente Humano de Marketing",
-  "description": "Estrategia, creatividad y tecnología para convertir tu marketing en crecimiento real. Más clientes. Más ventas. Menos fricción.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
