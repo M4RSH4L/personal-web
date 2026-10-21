@@ -10,3 +10,8 @@ coverage/
 !.env.example
 next-env.d.ts
 tsconfig.tsbuildinfo
+.vercel/
+.aistudio/
+.gemini/
+*.pem
+*.key

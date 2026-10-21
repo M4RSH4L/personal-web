@@ -467,7 +467,15 @@ export const MorphoInteractiveAgent: React.FC<MorphoInteractiveAgentProps> = ({ 
                         : 'bg-slate-100 text-slate-800 rounded-bl-sm font-normal'
                     }`}
                   >
-                    <div dangerouslySetInnerHTML={{ __html: msg.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                    <div>
+                      {msg.text.split(/(\*\*.*?\*\*)/g).map((part, partIdx) =>
+                        part.startsWith('**') && part.endsWith('**') ? (
+                          <strong key={partIdx}>{part.slice(2, -2)}</strong>
+                        ) : (
+                          <React.Fragment key={partIdx}>{part}</React.Fragment>
+                        )
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
