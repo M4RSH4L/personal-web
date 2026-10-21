@@ -1,66 +1,65 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { Hero } from './Hero';
 import { PartnersRow } from './PartnersRow';
 import { CorePillars } from './CorePillars';
-import { MorphoInteractiveAgent } from './MorphoInteractiveAgent';
-import { GrowthCalculator } from './GrowthCalculator';
 import { CaseStudies } from './CaseStudies';
-import { ProcessRoadmap } from './ProcessRoadmap';
-import { ExpertContentSection } from './ExpertContentSection';
 import { CalloutBanner } from './CalloutBanner';
-import { FaqSection } from './FaqSection';
-import { InfoproductsSection } from './InfoproductsSection';
 import { useBooking } from './BookingContext';
 
 export const HomeClient: React.FC = () => {
   const { openBooking } = useBooking();
 
-  const handleOpenDiagnostic = () => {
-    const el = document.getElementById('agente-diagnostico');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <main>
-      {/* 1. Hero Section: Propuesta de Valor Comercial & Retrato Editorial */}
-      <Hero
-        onOpenBooking={() => openBooking(undefined, 'hero')}
-        onOpenDiagnostic={handleOpenDiagnostic}
-      />
+      {/* 1. Hero */}
+      <Hero onOpenBooking={() => openBooking(undefined, 'hero')} />
 
-      {/* 2. Certificaciones y Ecosistema */}
+      {/* 2. Credenciales discretas */}
       <PartnersRow />
 
-      {/* 3. Cinco Servicios Especializados con Acceso Directo */}
+      {/* 3. Servicios en filas editoriales */}
       <CorePillars />
 
-      {/* 4. Metodología: Diagnóstico, Análisis, Priorización, Implementación y Medición */}
-      <ProcessRoadmap />
+      {/* 4. Caso destacado único */}
+      <CaseStudies />
 
-      {/* 5. Experiencia y Credibilidad: Casos Reales y Métricas Auditadas */}
-      <CaseStudies onOpenBooking={() => openBooking(undefined, 'case_studies')} />
+      {/* 5. Perfil profesional (Conciso, <= 45 palabras) */}
+      <section className="py-24 md:py-32 bg-white">
+        <div className="max-w-[1160px] mx-auto px-6 sm:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            <div className="lg:col-span-5">
+              <p className="text-xs font-medium tracking-[0.14em] text-[#656B76] uppercase mb-3">
+                PERFIL PROFESIONAL
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-semibold text-[#111318] tracking-[-0.02em]">
+                Estrategia comercial con visión de negocio.
+              </h2>
+            </div>
 
-      {/* 6. Agente Interactivo Morpho: Diagnóstico en Vivo & Consulta */}
-      <MorphoInteractiveAgent onOpenBooking={() => openBooking(undefined, 'interactive_agent')} />
+            <div className="lg:col-span-7 space-y-6">
+              <p className="text-base sm:text-lg text-[#656B76] leading-relaxed">
+                Soy Ronan Lavorato. Trabajo junto a dueños y directores de retail, e-commerce y empresas B2C para ordenar sus datos, optimizar la adquisición de clientes y profesionalizar sus procesos de venta con criterio técnico y comercial.
+              </p>
 
-      {/* 7. Simulador de Impacto & Calculadora de Retorno (ROI) */}
-      <GrowthCalculator onOpenBooking={() => openBooking(undefined, 'roi_calculator')} />
+              <div>
+                <Link
+                  href="/sobre-mi"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-[#2457D6] hover:text-[#111318] transition-colors"
+                >
+                  <span>Conocer trayectoria completa</span>
+                  <span aria-hidden="true">↗</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {/* 8. Contenido Experto: Artículos y Análisis vinculados a los 5 Servicios */}
-      <ExpertContentSection />
-
-      {/* 9. Preguntas Frecuentes */}
-      <FaqSection />
-
-      {/* 10. Callout Banner CTA */}
-      <CalloutBanner onOpenBooking={() => openBooking(undefined, 'callout_banner')} />
-
-      {/* 11. Área Exclusiva de Infoproductos en Video (Morpho Academy) */}
-      <InfoproductsSection />
+      {/* 6. CTA final */}
+      <CalloutBanner onOpenBooking={() => openBooking(undefined, 'final_cta')} />
     </main>
   );
 };

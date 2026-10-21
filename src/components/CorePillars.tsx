@@ -1,148 +1,89 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
-import {
-  BarChart3,
-  ShoppingBag,
-  SearchCheck,
-  Target,
-  MessageSquareQuote,
-  ArrowUpRight,
-  CheckCircle2,
-} from 'lucide-react';
-import { SERVICES_DATA } from '../data/services';
 
-const SERVICE_ICONS: Record<string, React.ReactNode> = {
-  'inteligencia-de-negocios-retail': <BarChart3 className="w-6 h-6 text-[#101828]" />,
-  'vender-en-mercado-libre': <ShoppingBag className="w-6 h-6 text-[#101828]" />,
-  'diagnostico-comercial-benchmark': <SearchCheck className="w-6 h-6 text-[#101828]" />,
-  'adquisicion-y-ventas-b2c': <Target className="w-6 h-6 text-[#101828]" />,
-  'objeciones-y-contratacion-comercial': <MessageSquareQuote className="w-6 h-6 text-[#101828]" />,
-};
+const EDITORIAL_SERVICES = [
+  {
+    number: '01',
+    name: 'Inteligencia de negocios para retail',
+    summary: 'Dashboards, márgenes, unidades e inventario para decidir con datos reales en cada sucursal.',
+    href: '/servicios/inteligencia-de-negocios-retail',
+  },
+  {
+    number: '02',
+    name: 'Mercado Libre: estrategia y rentabilidad',
+    summary: 'Estructura de costos, comisiones, logística y catálogo para vender con margen neto positivo.',
+    href: '/servicios/vender-en-mercado-libre',
+  },
+  {
+    number: '03',
+    name: 'Diagnóstico comercial y benchmark',
+    summary: 'Auditoría del sistema comercial, precios y competencia para detectar fugas en el embudo.',
+    href: '/servicios/diagnostico-comercial-benchmark',
+  },
+  {
+    number: '04',
+    name: 'Adquisición y ventas B2C',
+    summary: 'Integración entre pauta digital, CRM y procesos comerciales para convertir consultas en clientes.',
+    href: '/servicios/adquisicion-y-ventas-b2c',
+  },
+  {
+    number: '05',
+    name: 'Objeciones y talento comercial',
+    summary: 'Psicología del consumidor aplicada al cierre de ventas y evaluación de perfiles comerciales.',
+    href: '/servicios/objeciones-y-contratacion-comercial',
+  },
+];
 
 export const CorePillars: React.FC = () => {
   return (
-    <section id="servicios" className="py-20 md:py-28 bg-white border-b border-slate-100">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div className="max-w-2xl">
-            <span className="text-xs font-bold text-[#155EEF] uppercase tracking-wider block mb-2">
-              ARQUITECTURA DE SERVICIOS ESPECIALIZADOS
-            </span>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-[#101828] tracking-tight">
-              Cinco áreas de intervención para destrabar rentabilidad y ventas.
-            </h2>
-          </div>
-          <div className="max-w-md space-y-2">
-            <p className="text-slate-600 text-sm md:text-base leading-relaxed">
-              Cada servicio responde a un cuello de botella concreto en empresas de{' '}
-              <strong>retail, e-commerce, Mercado Libre y ventas B2C</strong>.
-            </p>
-            <Link
-              href="/servicios"
-              className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#155EEF] hover:underline uppercase tracking-wider"
-            >
-              <span>Ver comparativa completa de servicios</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
+    <section id="servicios" className="py-24 md:py-32 bg-white">
+      <div className="max-w-[1160px] mx-auto px-6 sm:px-10">
+        {/* Section Heading */}
+        <div className="max-w-2xl mb-14 md:mb-16">
+          <h2 className="text-3xl sm:text-4xl font-semibold text-[#111318] tracking-[-0.025em] mb-3">
+            Cinco áreas. Un mismo objetivo.
+          </h2>
+          <p className="text-base sm:text-lg text-[#656B76] leading-relaxed">
+            Identificar qué frena el crecimiento y actuar sobre lo que realmente importa.
+          </p>
         </div>
 
-        {/* 5 Specialized Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-          {SERVICES_DATA.map((service, index) => {
-            const isFeatured = index === 0 || index === 3;
-            return (
-              <article
-                key={service.slug}
-                className={`group relative p-7 rounded-2xl border transition-all duration-200 flex flex-col justify-between ${
-                  isFeatured
-                    ? 'border-slate-300 bg-slate-50/50 hover:border-[#155EEF] hover:bg-white hover:shadow-lg'
-                    : 'border-slate-200 bg-white hover:border-[#155EEF] hover:shadow-lg'
-                }`}
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    {/* Yellow Lime Icon Container (preserving original identity) */}
-                    <div className="w-14 h-14 rounded-full bg-[#D7FF00] flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-                      {SERVICE_ICONS[service.slug]}
-                    </div>
-                    <span className="text-xs font-mono font-bold text-slate-400 px-2.5 py-1 rounded-full bg-slate-100">
-                      SERVICIO {service.number}
-                    </span>
-                  </div>
+        {/* Editorial Numbered Rows */}
+        <div className="border-t border-[#E8EAF0]">
+          {EDITORIAL_SERVICES.map((service) => (
+            <Link
+              key={service.href}
+              href={service.href}
+              className="group block border-b border-[#E8EAF0] py-7 sm:py-8 transition-colors hover:bg-[#F6F7F9]/60 -mx-4 px-4 sm:mx-0 sm:px-4"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-8 items-baseline">
+                <div className="md:col-span-1 text-xs font-mono text-[#656B76] group-hover:text-[#2457D6] transition-colors">
+                  {service.number}
+                </div>
 
-                  <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#155EEF] block mb-1.5">
-                    {service.badge}
-                  </span>
-
-                  <h3 className="text-xl font-extrabold text-[#101828] mb-3 group-hover:text-[#155EEF] transition-colors leading-snug">
-                    <Link href={`/servicios/${service.slug}`} className="focus:outline-none">
-                      {service.shortTitle}
-                    </Link>
+                <div className="md:col-span-5">
+                  <h3 className="text-lg sm:text-xl font-medium text-[#111318] group-hover:text-[#2457D6] transition-colors">
+                    {service.name}
                   </h3>
+                </div>
 
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-5">
-                    {service.heroSubtitle}
+                <div className="md:col-span-5">
+                  <p className="text-sm text-[#656B76] leading-relaxed">
+                    {service.summary}
                   </p>
-
-                  {/* Key Deliverables Preview */}
-                  <ul className="space-y-2 mb-6 pt-4 border-t border-slate-100">
-                    {service.deliverables.slice(0, 3).map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-xs text-slate-700 font-medium">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#155EEF] shrink-0 mt-0.5" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
 
-                <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-                  <Link
-                    href={`/servicios/${service.slug}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#101828] group-hover:text-[#155EEF] transition-colors uppercase tracking-wider"
+                <div className="md:col-span-1 flex md:justify-end">
+                  <span
+                    aria-hidden="true"
+                    className="text-sm text-[#656B76] group-hover:text-[#2457D6] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform inline-block"
                   >
-                    <span>Explorar servicio y alcance</span>
-                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </Link>
+                    ↗
+                  </span>
                 </div>
-              </article>
-            );
-          })}
-
-          {/* 6th Card: Custom Diagnostic / Author Credibility Anchor */}
-          <div className="p-7 rounded-2xl bg-[#101828] text-white flex flex-col justify-between border border-slate-800 shadow-xl">
-            <div>
-              <span className="inline-block text-[11px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-[#D7FF00] text-[#101828] mb-5">
-                ¿NO SABÉS POR DÓNDE EMPEZAR?
-              </span>
-              <h3 className="text-xl sm:text-2xl font-extrabold text-white mb-3 leading-snug">
-                Identificamos juntos el cuello de botella principal de tu negocio.
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
-                En lugar de venderte un paquete enlatado, analizamos si tu urgencia hoy está en ordenar tus números de
-                retail, rentabilizar Mercado Libre, auditar tu competencia o entrenar el cierre de ventas B2C.
-              </p>
-            </div>
-
-            <div className="space-y-3 pt-4 border-t border-white/10">
-              <Link
-                href="/servicios/diagnostico-comercial-benchmark"
-                className="w-full py-3.5 px-4 text-xs font-extrabold text-[#101828] bg-[#D7FF00] hover:bg-[#cbf400] rounded-xl transition-all flex items-center justify-center gap-2"
-              >
-                <span>VER DIAGNÓSTICO COMERCIAL</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/sobre-mi"
-                className="block text-center text-xs font-semibold text-slate-300 hover:text-white transition-colors"
-              >
-                Conocer la trayectoria de Ronan Lavorato →
-              </Link>
-            </div>
-          </div>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </section>

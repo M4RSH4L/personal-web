@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { ArrowRight, MessageCircle } from 'lucide-react';
 import { useBooking } from './BookingContext';
 import { trackEvent } from '../lib/analytics';
 
@@ -30,18 +29,14 @@ export const ServiceCtaTrigger: React.FC<ServiceCtaTriggerProps> = ({
   }?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
+    <div className="flex flex-col sm:flex-row sm:items-center gap-4">
       <button
         type="button"
         onClick={() => openBooking(serviceName, `service_page_${variant}`)}
-        className={`group inline-flex items-center justify-center gap-2.5 px-7 py-4 text-xs sm:text-sm font-black tracking-wider rounded-full transition-all duration-200 cursor-pointer uppercase ${
-          variant === 'dark'
-            ? 'bg-[#D7FF00] text-[#0A0A0A] hover:bg-[#cbf400] shadow-md'
-            : 'bg-[#D7FF00] text-[#0A0A0A] hover:bg-[#cbf400] shadow-sm hover:shadow-md'
-        }`}
+        className="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-medium text-white bg-[#111318] hover:bg-[#2457D6] rounded-lg transition-colors cursor-pointer w-fit"
       >
         <span>{ctaLabel}</span>
-        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+        <span aria-hidden="true">↗</span>
       </button>
 
       <a
@@ -54,14 +49,10 @@ export const ServiceCtaTrigger: React.FC<ServiceCtaTriggerProps> = ({
             location: `service_page_${variant}`,
           })
         }
-        className={`inline-flex items-center justify-center gap-2 px-6 py-4 text-xs sm:text-sm font-bold rounded-full border transition-colors ${
-          variant === 'dark'
-            ? 'border-white/25 text-white hover:bg-white/10'
-            : 'border-slate-300 text-[#101828] hover:border-[#101828] bg-white'
-        }`}
+        className="inline-flex items-center gap-1.5 text-sm font-medium text-[#656B76] hover:text-[#111318] transition-colors py-2 w-fit"
       >
-        <MessageCircle className="w-4 h-4 text-[#25D366]" />
         <span>Consultar por WhatsApp</span>
+        <span aria-hidden="true">↗</span>
       </a>
     </div>
   );

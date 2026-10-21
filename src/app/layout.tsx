@@ -1,40 +1,25 @@
 import type { Metadata } from 'next';
-import { Plus_Jakarta_Sans, Inter_Tight, Caveat } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import '../index.css';
 import { SITE_CONFIG, getCanonicalUrl } from '../lib/seo-config';
 import { JsonLd, buildOrganizationAndPersonSchema } from '../components/JsonLd';
 import { SiteShell } from '../components/BookingContext';
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
-  variable: '--font-jakarta',
-});
-
-const interTight = Inter_Tight({
-  subsets: ['latin'],
-  weight: ['700', '800', '900'],
-  style: ['normal', 'italic'],
-  display: 'swap',
-  variable: '--font-inter-tight',
-});
-
-const caveat = Caveat({
-  subsets: ['latin'],
-  weight: ['600', '700'],
-  display: 'swap',
-  variable: '--font-caveat',
+  variable: '--font-inter',
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_CONFIG.url),
   title: {
-    default: 'MORPHO — Agente Humano de Marketing | Crecimiento Comercial y BI',
+    default: 'MORPHO — Agente Humano de Marketing | Estrategia, Datos y Crecimiento',
     template: '%s',
   },
   description:
-    'Transformo datos y procesos comerciales en crecimiento medible. Consultoría en Inteligencia de Negocios para Retail, Mercado Libre, Diagnóstico Comercial, Ventas B2C y Psicología del Consumidor.',
+    'Inteligencia comercial, adquisición y ventas para negocios que quieren crecer con datos. Consultoría en BI para Retail, Mercado Libre, Diagnóstico Comercial y Ventas B2C.',
   alternates: {
     canonical: getCanonicalUrl('/'),
   },
@@ -43,9 +28,9 @@ export const metadata: Metadata = {
     locale: SITE_CONFIG.locale,
     url: getCanonicalUrl('/'),
     siteName: `${SITE_CONFIG.name} — ${SITE_CONFIG.brandConcept}`,
-    title: 'MORPHO — Agente Humano de Marketing | Crecimiento Comercial y BI',
+    title: 'MORPHO — Menos intuición. Más criterio.',
     description:
-      'Transformo datos y procesos comerciales en crecimiento medible para retail, e-commerce y empresas B2C. Dirigido por Ronan Lavorato.',
+      'Inteligencia comercial, adquisición y ventas para negocios que quieren crecer con datos.',
     images: [
       {
         url: '/retrato_home.png',
@@ -57,9 +42,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'MORPHO — Agente Humano de Marketing | Crecimiento Comercial y BI',
+    title: 'MORPHO — Menos intuición. Más criterio.',
     description:
-      'Estrategia comercial, Business Intelligence para retail, Mercado Libre, adquisición B2C y psicología del consumidor.',
+      'Inteligencia comercial, adquisición y ventas para negocios que quieren crecer con datos.',
     images: ['/retrato_home.png'],
   },
   robots: {
@@ -77,14 +62,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="es"
-      className={`${plusJakartaSans.variable} ${interTight.variable} ${caveat.variable}`}
-    >
+    <html lang="es" className={inter.variable}>
       <head>
         <JsonLd data={buildOrganizationAndPersonSchema()} />
       </head>
-      <body className="min-h-screen bg-white text-[#101828] antialiased">
+      <body className="min-h-screen bg-white text-[#111318] antialiased">
         <SiteShell>{children}</SiteShell>
       </body>
     </html>

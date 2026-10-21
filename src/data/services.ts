@@ -190,8 +190,8 @@ export const SERVICES_DATA: ServiceItem[] = [
       },
     ],
     whatsappMessage:
-      '¡Hola Ronan! Estoy viendo el servicio de Inteligencia de Negocios para Retail en Morpho y quiero consultar para ordenar los datos y márgenes de mi negocio.',
-    ctaLabel: 'SOLICITAR DIAGNÓSTICO DE DATOS RETAIL',
+      'Hola Ronan, estoy viendo el servicio de Inteligencia de negocios para retail en Morpho y quiero consultar para ordenar los datos y márgenes de mi negocio.',
+    ctaLabel: 'Solicitar diagnóstico retail',
     relatedArticleSlugs: ['kpis-dashboards-retail-rentabilidad-sucursales'],
     relatedServiceSlugs: ['diagnostico-comercial-benchmark', 'adquisicion-y-ventas-b2c'],
   },
@@ -213,7 +213,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     ],
     badge: 'MARKETPLACE STRATEGY · MERCADO LIBRE',
     heroSubtitle:
-      'Abrimos y profesionalizamos tu operación en el marketplace de mayor tráfico de Latinoamérica con una estructura financiera blindada: que cada venta sume utilidad real después de comisiones, impuestos y logística.',
+      'Estructuramos y profesionalizamos tu operación en Mercado Libre con un cálculo preciso de costos: que cada venta genere margen real después de comisiones, impuestos y logística.',
     targetAudience: [
       'Comercios físicos, distribuidoras o marcas propias que aún no venden en Mercado Libre y quieren iniciar con el pie derecho.',
       'Empresas que ya tienen publicaciones activas pero no logran tracción o sienten que trabajan solo para pagar comisiones y envíos.',
@@ -334,8 +334,8 @@ export const SERVICES_DATA: ServiceItem[] = [
       },
     ],
     whatsappMessage:
-      '¡Hola Ronan! Vi el servicio de Consultoría para Vender en Mercado Libre en Morpho y me gustaría evaluar la estrategia y rentabilidad para mi negocio.',
-    ctaLabel: 'EVALUAR MI PROYECTO EN MERCADO LIBRE',
+      'Hola Ronan, vi el servicio de Consultoría para vender en Mercado Libre en Morpho y me gustaría evaluar la estrategia y rentabilidad para mi negocio.',
+    ctaLabel: 'Evaluar canal Mercado Libre',
     relatedArticleSlugs: ['como-calcular-rentabilidad-comisiones-mercado-libre'],
     relatedServiceSlugs: ['inteligencia-de-negocios-retail', 'diagnostico-comercial-benchmark'],
   },
@@ -376,7 +376,7 @@ export const SERVICES_DATA: ServiceItem[] = [
         consequence:
           'El negocio invierte en atraer visitas o leads, pero más del 70% se pierde en pasos intermedios (formularios confusos, carritos abandonados, presupuestos nunca seguidos).',
         solution:
-          'Auditoría forense del embudo completo desde el clic o consulta inicial hasta la compra y recompra, cuantificando el dinero perdido en cada etapa.',
+          'Revisión completa del embudo desde el clic o consulta inicial hasta la compra y recompra, cuantificando las pérdidas en cada etapa.',
       },
       {
         problem: 'Dispersión de esfuerzos en iniciativas de bajo impacto',
@@ -478,8 +478,8 @@ export const SERVICES_DATA: ServiceItem[] = [
       },
     ],
     whatsappMessage:
-      '¡Hola Ronan! Estoy viendo el servicio de Diagnóstico Comercial y Benchmark en Morpho y me gustaría evaluar una auditoría para mi negocio.',
-    ctaLabel: 'SOLICITAR DIAGNÓSTICO Y BENCHMARK',
+      'Hola Ronan, estoy viendo el servicio de Diagnóstico comercial y benchmark en Morpho y me gustaría evaluar una auditoría para mi negocio.',
+    ctaLabel: 'Solicitar diagnóstico comercial',
     relatedArticleSlugs: ['como-hacer-benchmark-comercial-detectar-fugas-embudo'],
     relatedServiceSlugs: ['inteligencia-de-negocios-retail', 'adquisicion-y-ventas-b2c'],
   },
@@ -622,8 +622,8 @@ export const SERVICES_DATA: ServiceItem[] = [
       },
     ],
     whatsappMessage:
-      '¡Hola Ronan! Vi el servicio de Modelo de Adquisición y Estructura de Ventas B2C en Morpho y quiero consultar para escalar la captación y el cierre de ventas.',
-    ctaLabel: 'DISEÑAR MI SISTEMA DE ADQUISICIÓN Y VENTAS',
+      'Hola Ronan, vi el servicio de Modelo de adquisición y ventas B2C en Morpho y quiero consultar para ordenar la captación y el cierre de ventas.',
+    ctaLabel: 'Conversar sobre adquisición y ventas',
     relatedArticleSlugs: ['estructura-ventas-b2c-adquisicion-crm-conversion'],
     relatedServiceSlugs: ['objeciones-y-contratacion-comercial', 'diagnostico-comercial-benchmark'],
   },
@@ -794,8 +794,8 @@ export const SERVICES_DATA: ServiceItem[] = [
       },
     ],
     whatsappMessage:
-      '¡Hola Ronan! Vi el servicio de Manejo de Objeciones y Contratación Comercial en Morpho y quiero consultar para potenciar los cierres y el equipo de ventas.',
-    ctaLabel: 'CONSULTAR POR OBJECIONES Y EQUIPO COMERCIAL',
+      'Hola Ronan, vi el servicio de Manejo de objeciones y contratación comercial en Morpho y quiero consultar para nuestro equipo de ventas.',
+    ctaLabel: 'Consultar por objeciones y equipo',
     relatedArticleSlugs: ['psicologia-consumidor-manejo-objeciones-equipos-comerciales'],
     relatedServiceSlugs: ['adquisicion-y-ventas-b2c', 'diagnostico-comercial-benchmark'],
   },

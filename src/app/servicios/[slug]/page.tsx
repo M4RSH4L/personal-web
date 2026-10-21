@@ -1,16 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import {
-  CheckCircle2,
-  AlertTriangle,
-  ArrowUpRight,
-  Layers,
-  Compass,
-  HelpCircle,
-  BookOpen,
-  ShieldCheck,
-} from 'lucide-react';
 import { SERVICES_DATA, getServiceBySlug } from '../../../data/services';
 import { ARTICLES_DATA } from '../../../data/articles';
 import { SITE_CONFIG, getCanonicalUrl } from '../../../lib/seo-config';
@@ -138,42 +128,38 @@ export default async function ServiceDetailPage({
   };
 
   return (
-    <main className="bg-white">
+    <main className="bg-white text-[#111318]">
       <JsonLd data={[breadcrumbSchema, serviceSchema, faqSchema]} />
 
-      {/* 1. Hero Section */}
-      <section className="pt-10 pb-16 md:pt-16 md:pb-24 bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 md:px-10">
-          {/* Breadcrumbs */}
+      {/* 1. Editorial Hero */}
+      <section className="py-16 md:py-24 border-b border-[#E8EAF0]">
+        <div className="max-w-[1160px] mx-auto px-6 sm:px-10">
           <nav
             aria-label="Breadcrumb"
-            className="text-xs font-semibold text-slate-500 mb-6 flex flex-wrap items-center gap-2"
+            className="text-xs text-[#656B76] mb-8 flex flex-wrap items-center gap-2"
           >
-            <Link href="/" className="hover:text-[#155EEF]">
+            <Link href="/" className="hover:text-[#111318]">
               Inicio
             </Link>
             <span>/</span>
-            <Link href="/servicios" className="hover:text-[#155EEF]">
+            <Link href="/servicios" className="hover:text-[#111318]">
               Servicios
             </Link>
             <span>/</span>
-            <span className="text-[#101828] font-bold">{service.shortTitle}</span>
+            <span className="text-[#111318]">{service.shortTitle}</span>
           </nav>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-8 space-y-6">
-              <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded-full border border-black/10 bg-black/[0.02] text-[#0A0A0A] text-[11px] font-mono font-bold tracking-wider uppercase">
-                <span className="w-2 h-2 rounded-full bg-[#D7FF00] border border-black/30" />
-                <span>
-                  SERVICIO {service.number} · {service.badge}
-                </span>
-              </div>
+              <p className="text-xs font-mono text-[#2457D6] uppercase tracking-wider">
+                SERVICIO {service.number} · {service.badge}
+              </p>
 
-              <h1 className="font-display text-3xl sm:text-5xl lg:text-[3.4rem] font-black text-[#0A0A0A] tracking-tight leading-[0.96]">
+              <h1 className="text-3xl sm:text-5xl font-semibold text-[#111318] tracking-[-0.03em] leading-[1.08]">
                 {service.title}
               </h1>
 
-              <p className="text-base sm:text-lg text-slate-700 leading-relaxed max-w-2xl">
+              <p className="text-lg text-[#656B76] leading-relaxed max-w-2xl">
                 {service.heroSubtitle}
               </p>
 
@@ -186,76 +172,52 @@ export default async function ServiceDetailPage({
               </div>
             </div>
 
-            {/* Right Summary Box: Para quién es */}
-            <aside className="lg:col-span-4 bg-slate-50 rounded-3xl p-6 sm:p-8 border border-slate-200 space-y-5">
-              <div>
-                <span className="text-xs font-extrabold uppercase tracking-wider text-[#155EEF] block mb-2">
-                  PERFIL DE EMPRESA IDEAL
-                </span>
-                <h2 className="text-lg font-extrabold text-[#101828]">
-                  ¿Cuándo necesitás esta intervención?
-                </h2>
-              </div>
-
-              <ul className="space-y-3">
+            <aside className="lg:col-span-4 bg-[#F6F7F9] p-6 sm:p-8 border border-[#E8EAF0] space-y-4">
+              <h2 className="text-xs font-medium uppercase tracking-[0.12em] text-[#656B76]">
+                Para quién está pensado
+              </h2>
+              <ul className="space-y-3 divide-y divide-[#E8EAF0]">
                 {service.targetAudience.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 leading-relaxed">
-                    <CheckCircle2 className="w-4 h-4 text-[#155EEF] shrink-0 mt-0.5" />
-                    <span>{item}</span>
+                  <li key={idx} className="pt-3 first:pt-0 text-sm text-[#111318] leading-relaxed">
+                    {item}
                   </li>
                 ))}
               </ul>
-
-              <div className="pt-4 border-t border-slate-200 text-xs text-slate-500">
-                Dirigido personalmente por{' '}
-                <Link href="/sobre-mi" className="font-bold text-[#101828] hover:text-[#155EEF] underline">
-                  Ronan Lavorato
-                </Link>{' '}
-                · Sin intermediarios junior.
-              </div>
             </aside>
           </div>
         </div>
       </section>
 
       {/* 2. Problemas que Resolvemos */}
-      <section className="py-16 md:py-24 bg-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <div className="max-w-2xl mb-12">
-            <span className="text-xs font-extrabold uppercase tracking-wider text-[#155EEF] block mb-2">
-              DIAGNÓSTICO DE CUELLOS DE BOTELLA
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#101828] tracking-tight">
-              Qué problemas concretos resuelve este servicio.
+      <section className="py-20 md:py-28 bg-white border-b border-[#E8EAF0]">
+        <div className="max-w-[1160px] mx-auto px-6 sm:px-10">
+          <div className="max-w-2xl mb-14">
+            <p className="text-xs font-medium uppercase tracking-[0.14em] text-[#656B76] mb-3">
+              DIAGNÓSTICO
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-semibold text-[#111318] tracking-[-0.02em]">
+              Problemas que resuelve esta intervención.
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="divide-y divide-[#E8EAF0] border-t border-b border-[#E8EAF0]">
             {service.problemsSolved.map((item, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-sm flex flex-col justify-between space-y-5"
-              >
-                <div className="space-y-3">
-                  <div className="inline-flex items-center gap-2 text-xs font-bold text-amber-800 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
-                    <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
-                    <span>Síntoma / Fuga #{idx + 1}</span>
-                  </div>
-                  <h3 className="text-lg font-extrabold text-[#101828] leading-snug">
-                    {item.problem}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    <strong>Consecuencia:</strong> {item.consequence}
-                  </p>
+              <div key={idx} className="py-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <div className="lg:col-span-4">
+                  <span className="text-xs font-mono text-[#656B76] block mb-1">0{idx + 1}</span>
+                  <h3 className="text-lg font-medium text-[#111318]">{item.problem}</h3>
                 </div>
-
-                <div className="p-4 rounded-xl bg-blue-50/70 border border-blue-100">
-                  <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#155EEF] block mb-1">
-                    Intervención MORPHO:
+                <div className="lg:col-span-4">
+                  <span className="text-xs uppercase tracking-wider text-[#656B76] block mb-1">
+                    Impacto en el negocio
                   </span>
-                  <p className="text-xs sm:text-sm text-slate-800 font-medium leading-relaxed">
-                    {item.solution}
-                  </p>
+                  <p className="text-sm text-[#656B76] leading-relaxed">{item.consequence}</p>
+                </div>
+                <div className="lg:col-span-4">
+                  <span className="text-xs uppercase tracking-wider text-[#2457D6] block mb-1">
+                    Enfoque MORPHO
+                  </span>
+                  <p className="text-sm text-[#111318] leading-relaxed">{item.solution}</p>
                 </div>
               </div>
             ))}
@@ -263,79 +225,63 @@ export default async function ServiceDetailPage({
         </div>
       </section>
 
-      {/* Optional Scope Clarification Block (Specifically for Service 5: Objeciones vs Contratación Comercial) */}
+      {/* Clarificación de Alcance (Servicio 05) */}
       {service.scopeClarification && (
-        <section className="py-16 bg-white border-b border-slate-200">
-          <div className="max-w-7xl mx-auto px-6 md:px-10">
-            <div className="rounded-3xl bg-[#F0F5FF] border border-blue-200 p-7 sm:p-10">
-              <div className="max-w-3xl mb-8">
-                <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-[#155EEF] mb-2">
-                  <ShieldCheck className="w-4 h-4" />
-                  <span>ESTRUCTURA MODULAR Y TRANSPARENCIA DE ALCANCE</span>
-                </span>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#101828] mb-2">
-                  {service.scopeClarification.title}
-                </h2>
-                <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-                  {service.scopeClarification.note}
-                </p>
-              </div>
+        <section className="py-20 bg-[#F6F7F9] border-b border-[#E8EAF0]">
+          <div className="max-w-[1160px] mx-auto px-6 sm:px-10">
+            <div className="max-w-3xl mb-12">
+              <p className="text-xs font-medium uppercase tracking-[0.14em] text-[#2457D6] mb-3">
+                DEFINICIÓN DE ALCANCE
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-semibold text-[#111318] tracking-[-0.02em] mb-3">
+                {service.scopeClarification.title}
+              </h2>
+              <p className="text-sm sm:text-base text-[#656B76] leading-relaxed">
+                {service.scopeClarification.note}
+              </p>
+            </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {service.scopeClarification.tracks.map((track, idx) => (
-                  <div key={idx} className="bg-white rounded-2xl p-6 border border-blue-100 shadow-sm">
-                    <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-[#D7FF00] text-[#101828]">
-                        {track.status}
-                      </span>
-                    </div>
-                    <h3 className="text-lg font-extrabold text-[#101828] mb-2">{track.name}</h3>
-                    <p className="text-xs sm:text-sm text-slate-600 mb-4 leading-relaxed">
-                      {track.description}
-                    </p>
-                    <ul className="space-y-2 pt-3 border-t border-slate-100">
-                      {track.items.map((bullet, bIdx) => (
-                        <li key={bIdx} className="flex items-start gap-2 text-xs sm:text-sm text-slate-800 font-medium">
-                          <CheckCircle2 className="w-4 h-4 text-[#155EEF] shrink-0 mt-0.5" />
-                          <span>{bullet}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {service.scopeClarification.tracks.map((track, idx) => (
+                <div key={idx} className="bg-white p-7 border border-[#E8EAF0] space-y-4">
+                  <span className="text-xs font-mono text-[#2457D6]">{track.status}</span>
+                  <h3 className="text-lg font-semibold text-[#111318]">{track.name}</h3>
+                  <p className="text-sm text-[#656B76] leading-relaxed">{track.description}</p>
+                  <ul className="space-y-2 pt-3 border-t border-[#E8EAF0]">
+                    {track.items.map((bullet, bIdx) => (
+                      <li key={bIdx} className="text-sm text-[#111318]">
+                        — {bullet}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
           </div>
         </section>
       )}
 
-      {/* 3. Módulos de Trabajo / Qué incluye */}
-      <section className="py-16 md:py-24 bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 md:px-10">
+      {/* 3. Módulos de Trabajo */}
+      <section className="py-20 md:py-28 bg-white border-b border-[#E8EAF0]">
+        <div className="max-w-[1160px] mx-auto px-6 sm:px-10">
           <div className="max-w-2xl mb-14">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-extrabold uppercase tracking-wider mb-3">
-              <Layers className="w-3.5 h-3.5 text-[#155EEF]" />
-              <span>ALCANCE TÉCNICO Y OPERATIVO</span>
-            </div>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#101828] tracking-tight">
-              Módulos de implementación de {service.shortTitle}.
+            <p className="text-xs font-medium uppercase tracking-[0.14em] text-[#656B76] mb-3">
+              ALCANCE TÉCNICO
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-semibold text-[#111318] tracking-[-0.02em]">
+              Módulos de trabajo.
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
             {service.coreModules.map((mod, idx) => (
-              <div
-                key={idx}
-                className="p-7 rounded-2xl border border-slate-200 hover:border-[#155EEF] transition-colors bg-white"
-              >
-                <h3 className="text-xl font-extrabold text-[#101828] mb-2">{mod.title}</h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-5">
-                  {mod.description}
-                </p>
-                <ul className="space-y-2.5 pt-4 border-t border-slate-100">
+              <div key={idx} className="border-t border-[#E8EAF0] pt-6 space-y-4">
+                <h3 className="text-lg font-semibold text-[#111318]">{mod.title}</h3>
+                <p className="text-sm text-[#656B76] leading-relaxed">{mod.description}</p>
+                <ul className="space-y-2 pt-2">
                   {mod.bullets.map((b, bIdx) => (
-                    <li key={bIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800">
-                      <CheckCircle2 className="w-4 h-4 text-[#155EEF] shrink-0 mt-0.5" />
+                    <li key={bIdx} className="text-sm text-[#111318] leading-relaxed flex items-start gap-2">
+                      <span className="text-[#2457D6]">—</span>
                       <span>{b}</span>
                     </li>
                   ))}
@@ -346,63 +292,56 @@ export default async function ServiceDetailPage({
         </div>
       </section>
 
-      {/* 4. Metodología Paso a Paso y Entregables */}
-      <section className="py-16 md:py-24 bg-slate-900 text-white border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-6 md:px-10">
+      {/* 4. Metodología y Entregables */}
+      <section className="py-20 md:py-28 bg-[#F6F7F9] border-b border-[#E8EAF0]">
+        <div className="max-w-[1160px] mx-auto px-6 sm:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-7 space-y-8">
               <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#D7FF00] text-xs font-extrabold uppercase tracking-wider mb-3">
-                  <Compass className="w-3.5 h-3.5" />
-                  <span>METODOLOGÍA DE EJECUCIÓN</span>
-                </div>
-                <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                  Cómo lo implementamos en tu negocio.
+                <p className="text-xs font-medium uppercase tracking-[0.14em] text-[#656B76] mb-3">
+                  PROCESO
+                </p>
+                <h2 className="text-2xl sm:text-3xl font-semibold text-[#111318] tracking-[-0.02em]">
+                  Secuencia de implementación.
                 </h2>
               </div>
 
-              <div className="space-y-4">
+              <div className="divide-y divide-[#E8EAF0] border-t border-b border-[#E8EAF0]">
                 {service.methodologySteps.map((m, idx) => (
-                  <div
-                    key={idx}
-                    className="p-5 rounded-2xl bg-slate-800/70 border border-slate-700 flex items-start gap-4"
-                  >
-                    <span className="px-2.5 py-1 rounded bg-[#D7FF00] text-[#101828] font-mono text-xs font-black shrink-0">
-                      {m.step}
-                    </span>
-                    <div>
-                      <h3 className="text-base font-extrabold text-white mb-1">{m.title}</h3>
-                      <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">{m.detail}</p>
+                  <div key={idx} className="py-5 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4">
+                    <span className="sm:col-span-2 text-xs font-mono text-[#2457D6]">{m.step}</span>
+                    <div className="sm:col-span-10 space-y-1">
+                      <h3 className="text-base font-medium text-[#111318]">{m.title}</h3>
+                      <p className="text-sm text-[#656B76] leading-relaxed">{m.detail}</p>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Deliverables Box */}
-            <div className="lg:col-span-5 bg-slate-800/90 rounded-3xl p-7 sm:p-8 border border-slate-700 space-y-6">
+            <div className="lg:col-span-5 bg-white p-7 sm:p-8 border border-[#E8EAF0] space-y-6">
               <div>
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#D7FF00] block mb-1">
-                  ACTIVOS QUE QUEDAN EN TU EMPRESA
-                </span>
-                <h3 className="text-xl font-extrabold text-white">Entregables verificables</h3>
+                <p className="text-xs font-medium uppercase tracking-[0.14em] text-[#656B76] mb-2">
+                  ENTREGABLES
+                </p>
+                <h3 className="text-xl font-semibold text-[#111318]">
+                  Qué queda instalado en tu negocio
+                </h3>
               </div>
 
-              <ul className="space-y-3">
+              <ul className="space-y-3 divide-y divide-[#E8EAF0]">
                 {service.deliverables.map((deliv, i) => (
-                  <li key={i} className="flex items-start gap-3 text-xs sm:text-sm text-slate-200 leading-relaxed">
-                    <CheckCircle2 className="w-4 h-4 text-[#D7FF00] shrink-0 mt-0.5" />
-                    <span>{deliv}</span>
+                  <li key={i} className="pt-3 first:pt-0 text-sm text-[#111318] leading-relaxed">
+                    {deliv}
                   </li>
                 ))}
               </ul>
 
-              <div className="pt-4 border-t border-slate-700">
+              <div className="pt-4 border-t border-[#E8EAF0]">
                 <ServiceCtaTrigger
                   serviceName={service.shortTitle}
                   ctaLabel={service.ctaLabel}
                   whatsappMessage={service.whatsappMessage}
-                  variant="dark"
                 />
               </div>
             </div>
@@ -410,87 +349,77 @@ export default async function ServiceDetailPage({
         </div>
       </section>
 
-      {/* 5. Preguntas Frecuentes del Servicio */}
-      <section className="py-16 md:py-24 bg-white border-b border-slate-200">
-        <div className="max-w-4xl mx-auto px-6 md:px-10">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-[#155EEF] text-xs font-extrabold uppercase tracking-wider mb-3">
-              <HelpCircle className="w-3.5 h-3.5" />
-              <span>PREGUNTAS FRECUENTES</span>
+      {/* 5. Preguntas Frecuentes */}
+      <section className="py-20 md:py-28 bg-white border-b border-[#E8EAF0]">
+        <div className="max-w-[1160px] mx-auto px-6 sm:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div className="lg:col-span-4">
+              <p className="text-xs font-medium uppercase tracking-[0.14em] text-[#656B76] mb-3">
+                PREGUNTAS FRECUENTES
+              </p>
+              <h2 className="text-2xl font-semibold text-[#111318] tracking-[-0.02em]">
+                Dudas habituales sobre {service.shortTitle}
+              </h2>
             </div>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#101828]">
-              Respuestas claras sobre {service.shortTitle}
-            </h2>
-          </div>
 
-          <div className="space-y-4">
-            {service.faqs.map((faq, idx) => (
-              <div key={idx} className="p-6 rounded-2xl border border-slate-200 bg-slate-50/50">
-                <h3 className="text-base font-extrabold text-[#101828] mb-2">{faq.question}</h3>
-                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
+            <div className="lg:col-span-8 divide-y divide-[#E8EAF0] border-t border-b border-[#E8EAF0]">
+              {service.faqs.map((faq, idx) => (
+                <div key={idx} className="py-6 space-y-2">
+                  <h3 className="text-base font-medium text-[#111318]">{faq.question}</h3>
+                  <p className="text-sm text-[#656B76] leading-relaxed">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 6. Contenido Experto Relacionado y Servicios Complementarios */}
-      <section className="py-16 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Related Articles */}
+      {/* 6. Lectura Relacionada y Servicios Complementarios */}
+      <section className="py-16 bg-[#F6F7F9]">
+        <div className="max-w-[1160px] mx-auto px-6 sm:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             <div className="lg:col-span-6 space-y-4">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#155EEF] flex items-center gap-1.5">
-                <BookOpen className="w-3.5 h-3.5" />
-                <span>Lectura Recomendada sobre esta Especialidad</span>
+              <span className="text-xs font-medium uppercase tracking-[0.14em] text-[#656B76] block">
+                ANÁLISIS RELACIONADO
               </span>
               {relatedArticles.map((art) => (
-                <div
-                  key={art.slug}
-                  className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-[#155EEF] transition-all"
-                >
-                  <span className="text-[11px] font-bold text-[#155EEF] uppercase">{art.category}</span>
-                  <h3 className="text-lg font-extrabold text-[#101828] mt-1 mb-2">
-                    <Link href={`/recursos/${art.slug}`} className="hover:text-[#155EEF]">
+                <div key={art.slug} className="p-6 bg-white border border-[#E8EAF0] space-y-2">
+                  <h3 className="text-base font-medium text-[#111318]">
+                    <Link href={`/recursos/${art.slug}`} className="hover:text-[#2457D6] transition-colors">
                       {art.title}
                     </Link>
                   </h3>
-                  <p className="text-xs text-slate-600 mb-3">{art.summary}</p>
+                  <p className="text-xs text-[#656B76] leading-relaxed">{art.summary}</p>
                   <Link
                     href={`/recursos/${art.slug}`}
-                    className="inline-flex items-center gap-1 text-xs font-extrabold text-[#155EEF] hover:underline"
+                    className="inline-flex items-center gap-1 text-xs font-medium text-[#2457D6] pt-1"
                   >
-                    <span>Leer guía técnica completa</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
+                    <span>Leer artículo</span>
+                    <span aria-hidden="true">↗</span>
                   </Link>
                 </div>
               ))}
             </div>
 
-            {/* Related Services */}
             <div className="lg:col-span-6 space-y-4">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-slate-500 block">
-                Servicios Complementarios en MORPHO
+              <span className="text-xs font-medium uppercase tracking-[0.14em] text-[#656B76] block">
+                SERVICIOS COMPLEMENTARIOS
               </span>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="divide-y divide-[#E8EAF0] border-t border-b border-[#E8EAF0] bg-white px-6">
                 {relatedServices.map((rel) => (
                   <Link
                     key={rel.slug}
                     href={`/servicios/${rel.slug}`}
-                    className="p-5 rounded-2xl bg-white border border-slate-200 hover:border-[#155EEF] transition-all flex flex-col justify-between group"
+                    className="py-5 flex items-center justify-between group"
                   >
                     <div>
-                      <span className="text-[10px] font-mono font-bold text-slate-400">
-                        SERVICIO {rel.number}
-                      </span>
-                      <h3 className="text-base font-extrabold text-[#101828] group-hover:text-[#155EEF] mt-1 mb-2">
+                      <span className="text-xs font-mono text-[#656B76] mr-3">{rel.number}</span>
+                      <span className="text-sm font-medium text-[#111318] group-hover:text-[#2457D6] transition-colors">
                         {rel.shortTitle}
-                      </h3>
-                      <p className="text-xs text-slate-600 line-clamp-3">{rel.heroSubtitle}</p>
+                      </span>
                     </div>
-                    <span className="inline-flex items-center gap-1 text-xs font-bold text-[#155EEF] mt-4">
-                      <span>Ver servicio</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    <span aria-hidden="true" className="text-xs text-[#656B76] group-hover:text-[#2457D6]">
+                      ↗
                     </span>
                   </Link>
                 ))}

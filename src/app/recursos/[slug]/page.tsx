@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Clock, CheckCircle2, ArrowUpRight, UserCheck, Tag } from 'lucide-react';
 import { ARTICLES_DATA, getArticleBySlug } from '../../../data/articles';
 import { SITE_CONFIG, getCanonicalUrl } from '../../../lib/seo-config';
 import { JsonLd, buildBreadcrumbSchema } from '../../../components/JsonLd';
@@ -68,7 +67,7 @@ export default async function ArticleDetailPage({
 
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'Inicio', path: '/' },
-    { name: 'Artículos y Guías', path: '/recursos' },
+    { name: 'Artículos', path: '/recursos' },
     { name: article.title, path: `/recursos/${article.slug}` },
   ]);
 
@@ -104,119 +103,94 @@ export default async function ArticleDetailPage({
   };
 
   return (
-    <main className="bg-white">
+    <main className="bg-white text-[#111318]">
       <JsonLd data={[breadcrumbSchema, blogPostingSchema]} />
 
-      <article className="py-12 md:py-20">
-        <div className="max-w-4xl mx-auto px-6 md:px-10">
+      <article className="py-16 md:py-24">
+        <div className="max-w-[780px] mx-auto px-6 sm:px-10">
           {/* Breadcrumbs */}
           <nav
             aria-label="Breadcrumb"
-            className="text-xs font-semibold text-slate-500 mb-6 flex flex-wrap items-center gap-2"
+            className="text-xs text-[#656B76] mb-8 flex flex-wrap items-center gap-2"
           >
-            <Link href="/" className="hover:text-[#155EEF]">
+            <Link href="/" className="hover:text-[#111318]">
               Inicio
             </Link>
             <span>/</span>
-            <Link href="/recursos" className="hover:text-[#155EEF]">
-              Artículos y Guías
+            <Link href="/recursos" className="hover:text-[#111318]">
+              Artículos
             </Link>
             <span>/</span>
-            <span className="text-[#101828] font-bold truncate max-w-xs">{article.category}</span>
+            <span className="text-[#111318] truncate max-w-xs">{article.category}</span>
           </nav>
 
           {/* Header */}
-          <header className="space-y-5 pb-10 border-b border-slate-200">
-            <div className="flex flex-wrap items-center gap-3 text-xs font-bold">
-              <span className="px-3 py-1 rounded-full bg-blue-50 text-[#155EEF] border border-blue-100">
-                {article.category}
-              </span>
-              <span className="flex items-center gap-1 text-slate-500 font-mono">
-                <Clock className="w-3.5 h-3.5" />
-                {article.readingTime}
-              </span>
-            </div>
+          <header className="space-y-5 pb-10 border-b border-[#E8EAF0]">
+            <p className="text-xs font-mono text-[#2457D6] uppercase tracking-wider">
+              {article.category} · {article.readingTime}
+            </p>
 
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-black text-[#0A0A0A] tracking-tight leading-[1.03]">
+            <h1 className="text-3xl sm:text-4xl font-semibold text-[#111318] tracking-[-0.025em] leading-[1.12]">
               {article.title}
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
+            <p className="text-base sm:text-lg text-[#656B76] leading-relaxed">
               {article.summary}
             </p>
 
-            {/* Author & Related Service Bar */}
-            <div className="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-200">
-              <div className="flex items-center gap-3">
-                <img
-                  src="/retrato_home.png"
-                  alt={article.author.name}
-                  width={44}
-                  height={44}
-                  className="w-11 h-11 rounded-full object-cover object-top filter grayscale border border-slate-300"
-                />
-                <div>
-                  <Link
-                    href={article.author.profileUrl}
-                    className="text-xs sm:text-sm font-extrabold text-[#101828] hover:text-[#155EEF] flex items-center gap-1"
-                  >
-                    <span>{article.author.name}</span>
-                    <UserCheck className="w-3.5 h-3.5 text-[#155EEF]" />
-                  </Link>
-                  <span className="text-[11px] text-slate-500 block">{article.author.role}</span>
-                </div>
+            <div className="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-[#656B76]">
+              <div>
+                Por{' '}
+                <Link href={article.author.profileUrl} className="font-medium text-[#111318] hover:text-[#2457D6]">
+                  {article.author.name}
+                </Link>
               </div>
-
-              <div className="text-xs">
-                <span className="text-slate-400 block text-[10px] uppercase font-bold">
-                  Servicio Relacionado:
-                </span>
+              <div>
+                Área relacionada:{' '}
                 <Link
                   href={`/servicios/${article.relatedServiceSlug}`}
-                  className="font-extrabold text-[#155EEF] hover:underline inline-flex items-center gap-1"
+                  className="font-medium text-[#2457D6] hover:underline"
                 >
-                  <span>{article.relatedServiceTitle}</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
+                  {article.relatedServiceTitle} ↗
                 </Link>
               </div>
             </div>
           </header>
 
-          {/* Key Takeaways Box */}
-          <section className="my-10 p-6 sm:p-8 rounded-2xl bg-[#F0F5FF] border border-blue-200">
-            <h2 className="text-sm font-extrabold uppercase tracking-wider text-[#155EEF] mb-3">
-              Puntos Clave de este Análisis Ejecutivo
+          {/* Key Takeaways */}
+          <section className="my-10 p-6 bg-[#F6F7F9] border border-[#E8EAF0] space-y-3">
+            <h2 className="text-xs font-medium uppercase tracking-[0.12em] text-[#656B76]">
+              Síntesis ejecutiva
             </h2>
-            <ul className="space-y-2.5">
+            <ul className="space-y-2">
               {article.keyTakeaways.map((point, idx) => (
-                <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800 font-medium">
-                  <CheckCircle2 className="w-4 h-4 text-[#155EEF] shrink-0 mt-0.5" />
+                <li key={idx} className="text-sm text-[#111318] leading-relaxed flex items-start gap-2">
+                  <span className="text-[#2457D6]">—</span>
                   <span>{point}</span>
                 </li>
               ))}
             </ul>
           </section>
 
-          {/* Structured H2 / H3 Body */}
+          {/* Body H2 / H3 */}
           <div className="space-y-12">
             {article.sections.map((sec, idx) => (
               <section key={idx} className="space-y-6">
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#101828] tracking-tight">
+                <h2 className="text-2xl font-semibold text-[#111318] tracking-[-0.02em]">
                   {sec.h2}
                 </h2>
-                <p className="text-sm sm:text-base text-slate-700 leading-relaxed">{sec.intro}</p>
+                <p className="text-base text-[#656B76] leading-relaxed">{sec.intro}</p>
 
-                <div className="space-y-6 pl-0 sm:pl-4 border-l-0 sm:border-l-2 border-slate-200">
+                <div className="space-y-8 pt-2">
                   {sec.subSections.map((sub, sIdx) => (
-                    <div key={sIdx} className="space-y-3 bg-slate-50/70 p-5 sm:p-6 rounded-2xl border border-slate-200/80">
-                      <h3 className="text-lg sm:text-xl font-extrabold text-[#101828]">{sub.h3}</h3>
-                      <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">{sub.content}</p>
+                    <div key={sIdx} className="space-y-3 border-l border-[#E8EAF0] pl-5">
+                      <h3 className="text-lg font-medium text-[#111318]">{sub.h3}</h3>
+                      <p className="text-sm sm:text-base text-[#656B76] leading-relaxed">{sub.content}</p>
                       {sub.bullets && (
-                        <ul className="space-y-2 pt-2">
+                        <ul className="space-y-2 pt-1">
                           {sub.bullets.map((b, bIdx) => (
-                            <li key={bIdx} className="flex items-start gap-2 text-xs sm:text-sm text-slate-800">
-                              <CheckCircle2 className="w-4 h-4 text-[#155EEF] shrink-0 mt-0.5" />
-                              <span>{b}</span>
+                            <li key={bIdx} className="text-sm text-[#111318] leading-relaxed">
+                              — {b}
                             </li>
                           ))}
                         </ul>
@@ -228,58 +202,28 @@ export default async function ArticleDetailPage({
             ))}
           </div>
 
-          {/* Search Intent & Keyword Hypotheses Transparency Box */}
-          <aside className="mt-12 p-5 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-2">
-            <div className="font-bold text-slate-800 flex items-center gap-1.5">
-              <Tag className="w-3.5 h-3.5 text-[#155EEF]" />
-              <span>Ficha Editorial & Intención de Búsqueda:</span>
-            </div>
-            <p>{article.searchIntent}</p>
-            <div className="flex flex-wrap gap-2 pt-1">
-              {article.keywordHypotheses.map((kw, i) => (
-                <span key={i} className="px-2.5 py-1 rounded bg-white border border-slate-200 text-[11px] font-mono">
-                  {kw}
-                </span>
-              ))}
-            </div>
-          </aside>
-
-          {/* Contextual CTA Box linking to the Service */}
-          <section className="mt-12 p-8 sm:p-10 rounded-3xl bg-[#101828] text-white space-y-6">
+          {/* Contextual CTA */}
+          <section className="mt-16 pt-10 border-t border-[#E8EAF0] space-y-6">
             <div className="space-y-2">
-              <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#D7FF00]">
-                APLICÁ ESTA METODOLOGÍA EN TU EMPRESA
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">{article.ctaTitle}</h2>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
-                {article.ctaDescription}
+              <p className="text-xs font-mono uppercase tracking-wider text-[#2457D6]">
+                SERVICIO RELACIONADO
               </p>
+              <h2 className="text-2xl font-semibold text-[#111318]">{article.ctaTitle}</h2>
+              <p className="text-sm text-[#656B76] leading-relaxed">{article.ctaDescription}</p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4">
-              <Link
-                href={`/servicios/${article.relatedServiceSlug}`}
-                className="inline-flex items-center gap-2 px-6 py-4 rounded-full bg-[#D7FF00] text-[#0A0A0A] text-xs font-black uppercase tracking-wider hover:bg-[#cbf400] transition-colors"
-              >
-                <span>{article.ctaButtonText}</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </Link>
-              <Link
-                href={`/servicios/${article.secondaryServiceSlug}`}
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-300 hover:text-white underline"
-              >
-                <span>Ver también: {article.secondaryServiceTitle}</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-
-            <div className="pt-4 border-t border-white/10">
+            <div className="flex flex-wrap items-center gap-6">
               <ServiceCtaTrigger
                 serviceName={article.relatedServiceTitle}
-                ctaLabel="SOLICITAR DIAGNÓSTICO DIRECTO"
+                ctaLabel="Conversemos"
                 whatsappMessage={article.whatsappMessage}
-                variant="dark"
               />
+              <Link
+                href={`/servicios/${article.relatedServiceSlug}`}
+                className="text-sm font-medium text-[#2457D6] hover:text-[#111318] transition-colors"
+              >
+                Ver alcance de {article.relatedServiceTitle} ↗
+              </Link>
             </div>
           </section>
         </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { X, Clock, CheckCircle2, ArrowRight, Sparkles, AlertCircle } from 'lucide-react';
+import { X } from 'lucide-react';
 import { BookingSubmission } from '../types';
 import { SERVICES_DATA } from '../data/services';
 import { trackEvent } from '../lib/analytics';
@@ -13,14 +13,14 @@ interface BookingModalProps {
 }
 
 const AVAILABLE_DAYS = [
-  { dayName: 'Hoy', dateStr: 'Próximo turno hoy', isToday: true },
-  { dayName: 'Mañana', dateStr: 'Mañana', isToday: false },
-  { dayName: 'Miércoles', dateStr: 'Miércoles', isToday: false },
-  { dayName: 'Jueves', dateStr: 'Jueves', isToday: false },
-  { dayName: 'Viernes', dateStr: 'Viernes', isToday: false },
+  { dayName: 'Hoy', dateStr: 'Hoy' },
+  { dayName: 'Mañana', dateStr: 'Mañana' },
+  { dayName: 'Miércoles', dateStr: 'Miércoles' },
+  { dayName: 'Jueves', dateStr: 'Jueves' },
+  { dayName: 'Viernes', dateStr: 'Viernes' },
 ];
 
-const TIME_SLOTS = ['10:00 AM', '11:30 AM', '02:00 PM', '03:30 PM', '05:00 PM', '06:30 PM'];
+const TIME_SLOTS = ['10:00', '11:30', '14:00', '15:30', '17:00', '18:30'];
 
 export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, initialService }) => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
@@ -34,7 +34,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
     businessName: '',
     websiteOrSocial: '',
     monthlyAdSpend: '5k_20k',
-    mainGoal: initialService || 'Diagnóstico Comercial y Benchmark',
+    mainGoal: initialService || 'Diagnóstico comercial y benchmark',
   });
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
     setFormError(null);
 
     if (!formData.fullName.trim() || !formData.email.includes('@') || !formData.businessName.trim()) {
-      setFormError('Por favor completá tu nombre, email corporativo válido y el nombre de tu empresa.');
+      setFormError('Por favor completá tu nombre, email válido y el nombre de tu empresa.');
       trackEvent('booking_submission_error', { reason: 'validation_failed' });
       return;
     }
@@ -75,7 +75,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
         adSpend: formData.monthlyAdSpend,
       });
       setStep(3);
-    }, 500);
+    }, 400);
   };
 
   const resetAndClose = () => {
@@ -87,9 +87,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
   const whatsappDirectUrl = `https://wa.me/${
     process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5491123456789'
   }?text=${encodeURIComponent(
-    `¡Hola Ronan! Reservé una sesión para ${selectedDay} a las ${selectedTime}. Mi empresa es ${
+    `Hola Ronan, reservé conversación para ${selectedDay} a las ${selectedTime}. Empresa: ${
       formData.businessName || ''
-    } y mi interés principal es: ${formData.mainGoal}.`
+    }. Área de interés: ${formData.mainGoal}.`
   )}`;
 
   return (
@@ -97,62 +97,43 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
       role="dialog"
       aria-modal="true"
       aria-labelledby="booking-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#111318]/40 backdrop-blur-xs"
+      onClick={resetAndClose}
     >
       <div
-        className="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden"
+        className="relative w-full max-w-lg bg-white border border-[#E8EAF0] p-6 sm:p-8"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Top bar */}
-        <div className="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50/50">
-          <div className="flex items-center gap-2">
-            <span className="text-xl font-black text-[#101828] lowercase tracking-tight">morpho</span>
-            <span className="text-xs text-slate-400">|</span>
-            <span id="booking-modal-title" className="text-xs font-bold text-[#155EEF] uppercase tracking-wider">
-              Diagnóstico Estratégico 1-a-1
+        {/* Header */}
+        <div className="flex items-center justify-between pb-5 border-b border-[#E8EAF0]">
+          <div>
+            <span className="text-xs font-medium uppercase tracking-[0.12em] text-[#656B76] block">
+              MORPHO · CONTACTO DIRECTO
             </span>
+            <h2 id="booking-modal-title" className="text-lg font-semibold text-[#111318] mt-0.5">
+              Conversación inicial de diagnóstico
+            </h2>
           </div>
           <button
             type="button"
             onClick={resetAndClose}
-            aria-label="Cerrar ventana de agendamiento"
-            className="p-1.5 rounded-full text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors"
+            aria-label="Cerrar ventana"
+            className="p-1.5 text-[#656B76] hover:text-[#111318] transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Step Indicator */}
-        <div className="px-6 pt-4 pb-2">
-          <div className="flex items-center justify-between text-xs font-bold text-slate-400 mb-2">
-            <span className={step >= 1 ? 'text-[#155EEF]' : ''}>1. Horario</span>
-            <span className={step >= 2 ? 'text-[#155EEF]' : ''}>2. Datos y Servicio</span>
-            <span className={step === 3 ? 'text-[#155EEF]' : ''}>3. Confirmación</span>
-          </div>
-          <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-            <div
-              className="bg-[#155EEF] h-full transition-all duration-300"
-              style={{ width: step === 1 ? '33%' : step === 2 ? '66%' : '100%' }}
-            />
-          </div>
-        </div>
-
-        {/* Step 1: Select Day & Time */}
+        {/* Step 1 */}
         {step === 1 && (
-          <div className="p-6 md:p-8 space-y-6">
-            <div>
-              <h3 className="text-xl font-extrabold text-[#101828] mb-1">
-                Elegí el mejor momento para reunirnos
-              </h3>
-              <p className="text-xs text-slate-500">
-                Sesión de diagnóstico de 30 minutos vía Google Meet directamente con Ronan Lavorato.
-              </p>
-            </div>
+          <div className="pt-6 space-y-6">
+            <p className="text-sm text-[#656B76] leading-relaxed">
+              Seleccioná un día y horario tentativo para una reunión de 30 minutos por Google Meet, o iniciá una conversación directa por WhatsApp.
+            </p>
 
-            {/* Days row */}
             <div>
-              <label className="text-xs font-extrabold uppercase text-slate-500 tracking-wider block mb-2">
-                Día Disponible
+              <label className="text-xs font-medium uppercase tracking-wider text-[#656B76] block mb-2.5">
+                Día preferido
               </label>
               <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
                 {AVAILABLE_DAYS.map((day) => (
@@ -160,233 +141,197 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
                     key={day.dateStr}
                     type="button"
                     onClick={() => setSelectedDay(day.dateStr)}
-                    className={`p-2.5 rounded-xl border text-center transition-all ${
+                    className={`py-2.5 px-2 border text-xs transition-colors cursor-pointer ${
                       selectedDay === day.dateStr
-                        ? 'border-[#155EEF] bg-blue-50 text-[#155EEF] font-bold shadow-sm ring-1 ring-[#155EEF]'
-                        : 'border-slate-200 text-slate-700 hover:border-slate-300 font-medium'
+                        ? 'border-[#2457D6] bg-[#F6F7F9] text-[#111318] font-medium'
+                        : 'border-[#E8EAF0] text-[#656B76] hover:border-[#111318]'
                     }`}
                   >
-                    <span className="text-[11px] block text-slate-500 font-normal">{day.dayName}</span>
-                    <span className="text-xs font-bold block truncate">{day.dateStr}</span>
+                    {day.dayName}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Time slots */}
             <div>
-              <label className="text-xs font-extrabold uppercase text-slate-500 tracking-wider block mb-2">
-                Horario (GMT-3 / Hora Argentina)
+              <label className="text-xs font-medium uppercase tracking-wider text-[#656B76] block mb-2.5">
+                Horario (GMT-3)
               </label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              <div className="grid grid-cols-3 gap-2">
                 {TIME_SLOTS.map((slot) => (
                   <button
                     key={slot}
                     type="button"
                     onClick={() => setSelectedTime(slot)}
-                    className={`py-2.5 px-3 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                    className={`py-2.5 px-3 border text-xs transition-colors cursor-pointer ${
                       selectedTime === slot
-                        ? 'border-[#155EEF] bg-[#155EEF] text-white shadow-sm'
-                        : 'border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50'
+                        ? 'border-[#2457D6] bg-[#2457D6] text-white font-medium'
+                        : 'border-[#E8EAF0] text-[#111318] hover:border-[#111318]'
                     }`}
                   >
-                    <Clock className="w-3.5 h-3.5" />
-                    <span>{slot}</span>
+                    {slot} hs
                   </button>
                 ))}
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-              <div className="text-xs text-slate-500">
-                Seleccionado:{' '}
-                <strong className="text-slate-900">
-                  {selectedDay} a las {selectedTime}
-                </strong>
-              </div>
+            <div className="pt-5 border-t border-[#E8EAF0] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <a
+                href={`https://wa.me/${
+                  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5491123456789'
+                }?text=${encodeURIComponent(
+                  `Hola Ronan, me gustaría conversar sobre ${formData.mainGoal} para mi negocio.`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() =>
+                  trackEvent('whatsapp_click', {
+                    location: 'booking_modal_step1',
+                    service: formData.mainGoal,
+                  })
+                }
+                className="text-xs font-medium text-[#656B76] hover:text-[#111318] transition-colors"
+              >
+                O escribir directo por WhatsApp ↗
+              </a>
+
               <button
                 type="button"
                 onClick={handleContinueStep1}
-                className="py-3 px-6 text-xs font-extrabold text-[#101828] bg-[#D7FF00] hover:bg-[#cbf400] rounded-xl transition-all shadow-sm flex items-center gap-2 cursor-pointer"
+                className="py-3 px-6 text-xs font-medium text-white bg-[#111318] hover:bg-[#2457D6] rounded-lg transition-colors cursor-pointer"
               >
-                <span>CONTINUAR</span>
-                <ArrowRight className="w-4 h-4" />
+                Continuar →
               </button>
             </div>
           </div>
         )}
 
-        {/* Step 2: Business Info Form */}
+        {/* Step 2 */}
         {step === 2 && (
-          <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-4" noValidate>
-            <div>
-              <h3 className="text-xl font-extrabold text-[#101828] mb-1">Contanos sobre tu negocio</h3>
-              <p className="text-xs text-slate-500">
-                Así preparamos un análisis preliminar antes de ingresar a la llamada.
-              </p>
-            </div>
-
+          <form onSubmit={handleSubmit} className="pt-6 space-y-4" noValidate>
             {formError && (
               <div
                 role="alert"
-                className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-center gap-2 font-medium"
+                className="p-3 bg-[#F6F7F9] border border-[#111318] text-xs text-[#111318]"
               >
-                <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
-                <span>{formError}</span>
+                {formError}
               </div>
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="booking-fullname" className="text-xs font-bold text-slate-700 block mb-1">
-                  Tu Nombre y Apellido *
+                <label htmlFor="booking-fullname" className="text-xs font-medium text-[#111318] block mb-1.5">
+                  Nombre y apellido *
                 </label>
                 <input
                   id="booking-fullname"
                   type="text"
                   required
-                  placeholder="Ej: Marcos Rossi"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#155EEF] focus:outline-none"
+                  className="w-full px-3.5 py-2.5 text-sm bg-white border border-[#E8EAF0] focus:border-[#2457D6] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label htmlFor="booking-email" className="text-xs font-bold text-slate-700 block mb-1">
-                  Email de Trabajo *
+                <label htmlFor="booking-email" className="text-xs font-medium text-[#111318] block mb-1.5">
+                  Email *
                 </label>
                 <input
                   id="booking-email"
                   type="email"
                   required
-                  placeholder="marcos@tuempresa.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#155EEF] focus:outline-none"
+                  className="w-full px-3.5 py-2.5 text-sm bg-white border border-[#E8EAF0] focus:border-[#2457D6] focus:outline-none"
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="booking-business" className="text-xs font-bold text-slate-700 block mb-1">
-                  Nombre de la Empresa / Marca *
+                <label htmlFor="booking-business" className="text-xs font-medium text-[#111318] block mb-1.5">
+                  Empresa *
                 </label>
                 <input
                   id="booking-business"
                   type="text"
                   required
-                  placeholder="Ej: Urban Store"
                   value={formData.businessName}
                   onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#155EEF] focus:outline-none"
+                  className="w-full px-3.5 py-2.5 text-sm bg-white border border-[#E8EAF0] focus:border-[#2457D6] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label htmlFor="booking-web" className="text-xs font-bold text-slate-700 block mb-1">
-                  Sitio Web, Tienda o Instagram
+                <label htmlFor="booking-web" className="text-xs font-medium text-[#111318] block mb-1.5">
+                  Sitio web o canal
                 </label>
                 <input
                   id="booking-web"
                   type="text"
-                  placeholder="tienda.com o @instagram"
                   value={formData.websiteOrSocial}
                   onChange={(e) => setFormData({ ...formData, websiteOrSocial: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#155EEF] focus:outline-none"
+                  className="w-full px-3.5 py-2.5 text-sm bg-white border border-[#E8EAF0] focus:border-[#2457D6] focus:outline-none"
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label htmlFor="booking-service" className="text-xs font-bold text-slate-700 block mb-1">
-                  Servicio de Interés Principal
-                </label>
-                <select
-                  id="booking-service"
-                  value={formData.mainGoal}
-                  onChange={(e) => setFormData({ ...formData, mainGoal: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#155EEF] focus:outline-none"
-                >
-                  {SERVICES_DATA.map((s) => (
-                    <option key={s.slug} value={s.shortTitle}>
-                      {s.number}. {s.shortTitle}
-                    </option>
-                  ))}
-                  <option value="Consulta Integral de Crecimiento">Consulta Integral de Crecimiento</option>
-                </select>
-              </div>
-
-              <div>
-                <label htmlFor="booking-spend" className="text-xs font-bold text-slate-700 block mb-1">
-                  Escala / Inversión Comercial Actual
-                </label>
-                <select
-                  id="booking-spend"
-                  value={formData.monthlyAdSpend}
-                  onChange={(e) => setFormData({ ...formData, monthlyAdSpend: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#155EEF] focus:outline-none"
-                >
-                  <option value="under_1k">Iniciando / Menos de $1,000 USD/mes</option>
-                  <option value="1k_5k">$1,000 a $5,000 USD / mes</option>
-                  <option value="5k_20k">$5,000 a $20,000 USD / mes</option>
-                  <option value="20k_plus">Más de $20,000 USD / mes</option>
-                </select>
-              </div>
+            <div>
+              <label htmlFor="booking-service" className="text-xs font-medium text-[#111318] block mb-1.5">
+                Área de interés principal
+              </label>
+              <select
+                id="booking-service"
+                value={formData.mainGoal}
+                onChange={(e) => setFormData({ ...formData, mainGoal: e.target.value })}
+                className="w-full px-3.5 py-2.5 text-sm bg-white border border-[#E8EAF0] focus:border-[#2457D6] focus:outline-none"
+              >
+                {SERVICES_DATA.map((s) => (
+                  <option key={s.slug} value={s.shortTitle}>
+                    {s.number} — {s.shortTitle}
+                  </option>
+                ))}
+                <option value="Consulta general">Consulta general de crecimiento</option>
+              </select>
             </div>
 
-            <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+            <div className="pt-5 border-t border-[#E8EAF0] flex items-center justify-between">
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="text-xs font-bold text-slate-500 hover:text-slate-800"
+                className="text-xs text-[#656B76] hover:text-[#111318] cursor-pointer"
               >
-                ← Volver al calendario
+                ← Volver
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="py-3 px-6 text-xs font-extrabold text-[#101828] bg-[#D7FF00] hover:bg-[#cbf400] rounded-xl transition-all shadow-sm flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                className="py-3 px-6 text-xs font-medium text-white bg-[#111318] hover:bg-[#2457D6] rounded-lg transition-colors cursor-pointer disabled:opacity-50"
               >
-                <span>{isSubmitting ? 'PROCESANDO...' : 'CONFIRMAR DIAGNÓSTICO'}</span>
-                <ArrowRight className="w-4 h-4" />
+                {isSubmitting ? 'Enviando...' : 'Confirmar solicitud ↗'}
               </button>
             </div>
           </form>
         )}
 
-        {/* Step 3: Success Confirmation */}
+        {/* Step 3 */}
         {step === 3 && (
-          <div className="p-8 text-center space-y-6">
-            <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
-              <CheckCircle2 className="w-8 h-8" />
-            </div>
-
-            <div>
-              <h3 className="text-2xl font-extrabold text-[#101828] mb-2">
-                ¡Solicitud de diagnóstico registrada!
+          <div className="pt-6 space-y-6">
+            <div className="space-y-2">
+              <p className="text-xs font-medium uppercase tracking-wider text-[#2457D6]">
+                SOLICITUD REGISTRADA
+              </p>
+              <h3 className="text-xl font-semibold text-[#111318]">
+                Gracias, {formData.fullName}.
               </h3>
-              <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
-                Pre-reservamos tu espacio para <strong>{selectedDay}</strong> a las{' '}
-                <strong>{selectedTime}</strong> sobre <strong>{formData.mainGoal}</strong>.
+              <p className="text-sm text-[#656B76] leading-relaxed">
+                Registramos tu solicitud para el <strong>{selectedDay}</strong> a las{' '}
+                <strong>{selectedTime} hs</strong> sobre <strong>{formData.mainGoal}</strong>.
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-blue-50 border border-blue-100 text-left max-w-md mx-auto space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#155EEF]">
-                <Sparkles className="w-4 h-4" />
-                <span>¿Qué veremos en la sesión de 30 minutos?</span>
-              </div>
-              <ul className="text-xs text-slate-700 space-y-1 list-disc list-inside">
-                <li>Diagnóstico en vivo de tus métricas, márgenes o embudo comercial</li>
-                <li>Detección de fugas críticas y oportunidades de corto plazo</li>
-                <li>Hoja de ruta recomendada según la etapa real de tu empresa</li>
-              </ul>
-            </div>
-
-            <div className="pt-2 flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="pt-4 border-t border-[#E8EAF0] flex flex-col sm:flex-row gap-3 justify-end">
               <a
                 href={whatsappDirectUrl}
                 target="_blank"
@@ -397,16 +342,16 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
                     service: formData.mainGoal,
                   })
                 }
-                className="px-6 py-3 text-xs font-extrabold bg-[#25D366] text-white rounded-xl hover:opacity-95 transition-opacity"
+                className="px-5 py-2.5 text-xs font-medium text-white bg-[#2457D6] hover:bg-[#111318] rounded-lg transition-colors text-center"
               >
-                CONFIRMAR AHORA POR WHATSAPP →
+                Enviar resumen por WhatsApp ↗
               </a>
               <button
                 type="button"
                 onClick={resetAndClose}
-                className="px-6 py-3 text-xs font-extrabold bg-[#101828] text-white rounded-xl hover:bg-slate-800 transition-colors cursor-pointer"
+                className="px-5 py-2.5 text-xs font-medium text-[#111318] border border-[#E8EAF0] hover:border-[#111318] rounded-lg transition-colors cursor-pointer"
               >
-                VOLVER AL SITIO
+                Cerrar
               </button>
             </div>
           </div>
